@@ -22,8 +22,8 @@ class ARView extends Component {
     }
     static defaultProps = {
         scripts: [
-            'https://aframe.io/releases/0.6.1/aframe.min.js',
-            'https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js'
+            'https://aframe.io/releases/0.8.0/aframe.min.js',
+            'https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js'
         ]
     }
     /* ======================== */
@@ -31,31 +31,25 @@ class ARView extends Component {
     /* ======================== */
     constructor(props) {
         super(props);
-        this.scripts = [];
     }
     componentDidMount() {
-        this.props.scripts.map(src => {
-            const scriptTag = document.createElement('script');
-            scriptTag.src = src;
-            scriptTag.async = true;
-            scriptTag.onload = (error) => {
-                console.log(error);
-            };
-            document.body.appendChild(scriptTag);
-            // Push ref to component global scripts var
-            this.scripts.push(scriptTag);
-        });
+            
     }
     /* ======================== */
     // RENDER
     /* ======================== */
     render() {
         return (
-            <a-scene embedded arjs>
-                <a-marker preset="hiro">
-                    <a-box position='0 0.5 0' material='color: black;'></a-box>
-                </a-marker>
-                <a-entity camera></a-entity>
+            <a-scene >
+                 <a-assets>
+                    <video id="penguin-sledding" autoPlay loop={true} src="sample.mp4"></video>
+                </a-assets>
+
+                <a-marker-camera preset='hiro'>
+                    <a-entity rotation="-90 0 0">
+                        <a-video src="#penguin-sledding" width="4" height="2.25" position="0 0 0"></a-video>
+                    </a-entity>
+                </a-marker-camera>
             </a-scene>
         );
     }
